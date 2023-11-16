@@ -1,6 +1,61 @@
 //ul id="character-list"
-//const personajes = document.getElementById('character-list')
-let pagina =1;
+const characterList = document.getElementById('character-list')
+const prevPageButton = document.getElementById('prev-page')
+const nextPageButton = document.getElementById('next-page')
+//name
+//image
+//species
+
+let currenPage = 1
+
+const getCharactersRichAndMorty = (page) => {
+    fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error('la solicitud no se puede procesar')
+            }   return response.json()
+        })
+        .then(data => {
+            const characters = data.results
+            characterList.innerHTML =''
+            characters.forEach(element => {
+                characterList.innerHTML += `
+                    <li>
+                         <figure>  
+                             <img src="${element.image}" alt="${element.name}" />
+                            <figcaption>
+                                 <p><span>Name:</span>${element.name}</p>
+                                 <p><span>Species:</span>${element.species}</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+                `
+            })
+        })
+        .catch(error => characterList.innerHTML = `se ha roto el universo, ${error}`)
+}
+
+nextPageButton.addEventListener('click', function (){
+    if (currenPage <42) {
+        getCharactersRichAndMorty(currenPage++); 
+    }
+    
+})
+prevPageButton.addEventListener('click', function (){
+    if (currenPage >1) {
+    getCharactersRichAndMorty(currenPage--); 
+    }   
+})
+
+getCharactersRichAndMorty(currenPage)
+
+
+
+
+
+
+
+/*let pagina =1;
 const paginaAnterior = document.getElementById('prev-page'); 
 const paginaSiguiente = document.getElementById('next-page'); 
 
@@ -35,21 +90,22 @@ const cargarPersonajes = async () => {
 
         document.getElementById('character-list').innerHTML = characters;
 
-        /*.then(response => response.json())
+    } catch(error){
+         console.log(error);
+    }
+}
+cargarPersonajes();*/
+
+
+
+
+ /*.then(response => response.json())
         .then(data => {
         console.log(data.results[0].name)
         console.log(data.results[0].species)
         console.log(data.results[0].image)
         personajes.innerHTML +=*/
-    
-       
 
-    } catch(error){
-         console.log(error);
-    }
-}
-
-cargarPersonajes();
 
 
 /* for (let i = 0; i< data.results.lenght; i++)

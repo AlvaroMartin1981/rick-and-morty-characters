@@ -75,7 +75,17 @@ table {
 ul {  
   padding-top: 100px;
   list-style: none;
+  display: flex;
+  gap: 25px;
 }
 
 
+p span {
+  font: bold;
+  font-style: oblique;
 
+}
+image {
+  width: 150px;
+  height: 150px;
+}
